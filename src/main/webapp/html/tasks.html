@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>tasks</title>
+    <link href = "style/main.css" rel = "stylesheet">
+    <script src = "script/jquery.js"></script>
+    <script src = "script/my.js"></script>
+</head>
+<body>
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Описание</th>
+            <th>Статус</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="tasks,numbers : ${tasks}">
+            <td th:text="${task.id}"/>
+            <td th:text="${task.description}" th:id ="'description_' + ${task.id}"/>
+            <td th:text="${task.status}" th:id ="'status_' + ${task.id}"/>
+            <td>
+                <button th:id="'edit_'+${task.id}" th:onclick="'edit_task('+ ${task.id}+')'">Редактировать</button>
+            </td>
+            <td>
+                <button th:id="'delete_'+${task.id}" th:onclick="'delete_task('+ ${task.id}+')'">Удалить</button>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="3" class="text_bold">Добавить задачу</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <input id='description_new' type='text' value=''>
+            </td>
+            <td>
+             <label for='status_new'></label>
+                <select id="status_new">
+                    <option value="IN_PROGRESS">В процессе</option>
+                    <option value="DONE">Выполненно</option>
+                    <option value="PAUSED">Приостановленно</option>
+                </select>
+            </td>
+            <td>
+                <button id="save_new" onclick="add_task()">Сохранить</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <h2>
+        <button th:each="pageNumber :${page_numbers}" class="button_page">
+            <a th:href="@{/(page=${pageNumber},limit=10)}" th:text="${pageNumber}" th:classappend="${pageNumber == current_page? 'active_page' :''}"></a>
+        </button>
+    </h2>
+
+</body>
+</html>
